@@ -34,6 +34,7 @@ import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.spinner.Picker;
 import com.codename1.ui.util.Resources;
+import static com.codename1.uikit.materialscreens.LoginForm.usr;
 import com.codename1.uikit.materialscreens.SideMenuBaseForm;
 import com.codename1.uikit.materialscreens.StatsForm;
 import com.codename1.util.StringUtil;
@@ -58,10 +59,10 @@ public class VoirCvCandidatEntreprise extends SideMenuBaseForm {
     public VoirCvCandidatEntreprise(int i, Resources res, DemandesPDF de) {
 
         super(BoxLayout.y());
-
+            
         Toolbar tb = getToolbar();
         tb.setTitleCentered(false);
-        Image profilePic = res.getImage("user-picture.jpg");
+        Image profilePic = usr.getImage();
         Image mask = res.getImage("round-mask.png");
         profilePic = profilePic.fill(mask.getWidth(), mask.getHeight());
         Label profilePicLabel = new Label(profilePic, "ProfilePicTitle");
@@ -93,9 +94,11 @@ public class VoirCvCandidatEntreprise extends SideMenuBaseForm {
                 ).add(BorderLayout.WEST, profilePicLabel),
                 GridLayout.encloseIn(2, remainingTasks, completedTasks)
         );
-
+        
         FloatingActionButton fab = FloatingActionButton.createFAB(FontImage.MATERIAL_ADD);
         fab.createSubFAB(FontImage.MATERIAL_CHECK, "").addActionListener((evt) -> {
+             
+            
             Dialog dlg = new Dialog("Fixation d'Entretien");
 
             Container hi = new Container(new BoxLayout(BoxLayout.Y_AXIS));
@@ -125,6 +128,8 @@ public class VoirCvCandidatEntreprise extends SideMenuBaseForm {
                 dlg.dispose();
             });
             //L'action d'ajoutt
+                           
+            
             loginButton.addActionListener((valider) -> {
                 try {
                     DemandesServices demand=new DemandesServices();
@@ -140,7 +145,7 @@ public class VoirCvCandidatEntreprise extends SideMenuBaseForm {
                     String finString =formatternew.format(date);
                     
                     //Date newDate=new Date(finString);
-                      Dialog dlgs = new Dialog("Authentication");
+                      Dialog dlgs = new Dialog("Confirmation");
     Style dlgStyle = dlgs.getDialogStyle();
     dlgStyle.setBorder(Border.createEmpty());
     dlgStyle.setBgTransparency(255);
@@ -156,7 +161,7 @@ public class VoirCvCandidatEntreprise extends SideMenuBaseForm {
     blueLabel.getUnselectedStyle().setPadding(1, 1, 1, 1);
     blueLabel.getUnselectedStyle().setPaddingUnit(Style.UNIT_TYPE_PIXELS);
     dlg.add(blueLabel);
-    TextArea ta = new TextArea("This is the text you want to appear in the dialog, this might line break if the text is too long...");
+    TextArea ta = new TextArea("Voulez Vous Vraiment ajouter Ces Details?");
     ta.setEditable(false);
     ta.setUIID("DialogBody");
     ta.getAllStyles().setFgColor(0);
@@ -178,6 +183,7 @@ public class VoirCvCandidatEntreprise extends SideMenuBaseForm {
                 Dialog ip = new InfiniteProgress().showInifiniteBlocking();
                 ip.show();
                 new ListeDemandes(res).show();
+                
         
     });
     
@@ -188,8 +194,8 @@ public class VoirCvCandidatEntreprise extends SideMenuBaseForm {
     });
     ok.getAllStyles().setBorder(Border.createEmpty());
     ok.getAllStyles().setFgColor(0);
-    dlgs.add(ok);
-    dlgs.add(Non);
+    dlgs.add(BoxLayout.encloseX(ok,Non));
+   
     dlgs.showDialog();
                    
                 } catch (ParseException ex) {
@@ -205,7 +211,14 @@ public class VoirCvCandidatEntreprise extends SideMenuBaseForm {
         //Annulation de la Demande
         fab.createSubFAB(FontImage.MATERIAL_DELETE, "").addActionListener((evt) -> {
 
-            System.out.println("Delete");
+           DemandesServices ds=new DemandesServices();
+           
+           
+           
+            Dialog ip = new InfiniteProgress().showInifiniteBlocking();
+          ip.show();
+          ds.RefuserCandidat(de.getMatriculeDemande());
+            new ListeDemandes(res).show();
         });
         fab.getAllStyles().setMarginUnit(Style.UNIT_TYPE_PIXELS);
         fab.getAllStyles().setMargin(BOTTOM, completedTasks.getPreferredH() - fab.getPreferredH() / 2);

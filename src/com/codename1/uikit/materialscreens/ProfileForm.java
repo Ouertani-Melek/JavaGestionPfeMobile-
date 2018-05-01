@@ -35,6 +35,7 @@ import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import static com.codename1.uikit.materialscreens.LoginForm.usr;
 
 /**
  * Represents a user profile in the app, the first form we open after the walkthru
@@ -46,12 +47,11 @@ public class ProfileForm extends SideMenuBaseForm {
         super(BoxLayout.y());
         Toolbar tb = getToolbar();
         tb.setTitleCentered(false);
-        Image profilePic = res.getImage("user-picture.jpg");
+        Image profilePic = usr.getImage().scaled(50, 50);
         Image mask = res.getImage("round-mask.png");
         profilePic = profilePic.fill(mask.getWidth(), mask.getHeight());
         Label profilePicLabel = new Label(profilePic, "ProfilePicTitle");
         profilePicLabel.setMask(mask.createMask());
-
         Button menuButton = new Button("");
         menuButton.setUIID("Title");
         FontImage.setMaterialIcon(menuButton, FontImage.MATERIAL_MENU);
@@ -67,12 +67,11 @@ public class ProfileForm extends SideMenuBaseForm {
                         new Label("completed tasks", "CenterSubTitle")
         );
         completedTasks.setUIID("CompletedTasks");
-
         Container titleCmp = BoxLayout.encloseY(
                         FlowLayout.encloseIn(menuButton),
                         BorderLayout.centerAbsolute(
                                 BoxLayout.encloseY(
-                                    new Label("Jennifer Wilson", "Title"),
+                                    new Label(usr.getNom()+" "+usr.getPrenom(), "Title"),
                                     new Label("UI/UX Designer", "SubTitle")
                                 )
                             ).add(BorderLayout.WEST, profilePicLabel),

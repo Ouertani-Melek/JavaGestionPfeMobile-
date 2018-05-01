@@ -5,6 +5,7 @@
  */
 package com.mycompany.Entities;
 
+import com.codename1.ui.Image;
 import java.util.Date;
 
 /**
@@ -30,7 +31,7 @@ public class User {
     private String prenom;
     private String age;
     private String ville;
-    private String image;
+    private Image image;
     private String rue;
     private String codePostal;
     private int numTel;
@@ -132,11 +133,11 @@ public class User {
         this.ville = ville;
     }
 
-    public String getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 

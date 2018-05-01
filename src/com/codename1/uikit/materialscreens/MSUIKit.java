@@ -15,7 +15,8 @@ public class MSUIKit {
 
     private Form current;
     private Resources theme;
-
+    public static Resources resource;
+    public static String host;
     public void init(Object context) {
         theme = UIManager.initFirstTheme("/theme");
 
@@ -31,6 +32,7 @@ public class MSUIKit {
             current.show();
             return;
         }
+        host="localhost";
         new LoginForm(theme).show();
         //new ProfileForm(theme).show();
     }

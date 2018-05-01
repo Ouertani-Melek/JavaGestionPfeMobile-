@@ -7,6 +7,7 @@ package com.mycompany.gui.Demandes;
 
 import com.codename1.components.InfiniteProgress;
 import com.codename1.components.MultiButton;
+import com.codename1.components.SpanLabel;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
@@ -20,6 +21,7 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import static com.codename1.uikit.materialscreens.LoginForm.usr;
 import com.codename1.uikit.materialscreens.SideMenuBaseForm;
 import com.codename1.uikit.materialscreens.StatsForm;
 import com.mycompagny.Service.CvServices;
@@ -44,7 +46,7 @@ private Resources rs;
          super(BoxLayout.y());
         Toolbar tb = getToolbar();
         tb.setTitleCentered(false);
-       Image profilePic = res.getImage("user-picture.jpg");
+       Image profilePic = usr.getImage();
         Image mask = res.getImage("round-mask.png");
         profilePic = profilePic.fill(mask.getWidth(), mask.getHeight());
         Label profilePicLabel = new Label(profilePic, "ProfilePicTitle");
@@ -78,10 +80,11 @@ private Resources rs;
         FontImage.setMaterialIcon(VoirCvButton, FontImage.MATERIAL_ARCHIVE);
         FontImage arrowDown = FontImage.createMaterial(FontImage.MATERIAL_ARCHIVE, "Label", 3);
        
-        for(DemandesPDF dem :d.AfficherToutesLesDemandes())
+        for(DemandesPDF dem :d.AfficherToutesLesDemandes(usr.getId()))
         {
+            SpanLabel lab=new SpanLabel(dem.getNomEtudiant().toUpperCase()+ " :\n " +dem.getOffreDemande().toUpperCase());
              //VoirCvButton.setText(String.valueOf(dem.getIdEtudiant()));
-        addButtonBottom(arrowDown,dem.getNomEtudiant()+ " :\n " +dem.getOffreDemande(), 0xd997f1, true,VoirCvButton,dem.getIdEtudiant(),dem);
+        addButtonBottom(arrowDown,lab.getText(), 0xd997f1, true,VoirCvButton,dem.getIdEtudiant(),dem);
             
         }
 
