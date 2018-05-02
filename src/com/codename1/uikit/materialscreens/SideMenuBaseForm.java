@@ -16,7 +16,6 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
-
 package com.codename1.uikit.materialscreens;
 
 import com.codename1.components.InfiniteProgress;
@@ -30,6 +29,7 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.Layout;
+import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import static com.codename1.uikit.materialscreens.LoginForm.usr;
 import com.mycompagny.Service.CvServices;
@@ -40,6 +40,8 @@ import com.mycompany.gui.Cv.ModifierCv;
 import com.mycompany.gui.Demandes.ListeAcceptés;
 import com.mycompany.gui.Demandes.ListeDemandes;
 import com.mycompany.gui.Demandes.QrCode;
+import com.mycompany.gui.stage.Affectation;
+import com.mycompany.gui.stage.Affichage;
 
 /**
  * Common code that can setup the side menu
@@ -62,9 +64,9 @@ public abstract class SideMenuBaseForm extends Form {
     public SideMenuBaseForm(Layout contentPaneLayout) {
         super(contentPaneLayout);
     }
-    
+
     public void setupSideMenu(Resources res) {
-             Image profilePic = usr.getImage();
+        Image profilePic = usr.getImage();
         Image mask = res.getImage("round-mask.png");
         mask = mask.scaledHeight(mask.getHeight() / 4 * 3);
         profilePic = profilePic.fill(mask.getWidth(), mask.getHeight());
@@ -72,66 +74,78 @@ public abstract class SideMenuBaseForm extends Form {
         profilePicLabel.setMask(mask.createMask());
         Container sidemenuTop = BorderLayout.center(profilePicLabel);
         sidemenuTop.setUIID("SidemenuTop");
-        
+
         getToolbar().addComponentToSideMenu(sidemenuTop);
         if (usr.getRoles().equalsIgnoreCase("ROLE_ENTREPRISE")) {
-        //getToolbar().addMaterialCommandToSideMenu("  Dashboard", FontImage.MATERIAL_DASHBOARD,  e -> showOtherForm(res));
-        getToolbar().addMaterialCommandToSideMenu("  Ajouter Offres", FontImage.MATERIAL_DASHBOARD,  e -> showOtherForm(res));
-        getToolbar().addMaterialCommandToSideMenu("  Liste Des offres", FontImage.MATERIAL_DASHBOARD,  e -> showOtherForm(res));
-        getToolbar().addMaterialCommandToSideMenu("  Liste Demandes", FontImage.MATERIAL_GROUP_WORK, e-> {
-        
-              Dialog ip = new InfiniteProgress().showInifiniteBlocking();
+            //getToolbar().addMaterialCommandToSideMenu("  Dashboard", FontImage.MATERIAL_DASHBOARD,  e -> showOtherForm(res));
+            getToolbar().addMaterialCommandToSideMenu("  Ajouter Offres", FontImage.MATERIAL_DASHBOARD, e -> showOtherForm(res));
+            getToolbar().addMaterialCommandToSideMenu("  Liste Des offres", FontImage.MATERIAL_DASHBOARD, e -> showOtherForm(res));
+            getToolbar().addMaterialCommandToSideMenu("  Liste Demandes", FontImage.MATERIAL_GROUP_WORK, e -> {
+
+                Dialog ip = new InfiniteProgress().showInifiniteBlocking();
                 ip.show();
-            new ListeDemandes(res).show();
-        
-        });
-        getToolbar().addMaterialCommandToSideMenu("  Liste Acceptés", FontImage.MATERIAL_TRENDING_UP,  e -> {
-        
-              Dialog ip = new InfiniteProgress().showInifiniteBlocking();
+                new ListeDemandes(res).show();
+
+            });
+            getToolbar().addMaterialCommandToSideMenu("  Liste Acceptés", FontImage.MATERIAL_TRENDING_UP, e -> {
+
+                Dialog ip = new InfiniteProgress().showInifiniteBlocking();
                 ip.show();
-            new ListeAcceptés(res).show();
-        
-        });
-         getToolbar().addMaterialCommandToSideMenu("  Lecteur QrCode", FontImage.MATERIAL_CODE,  e -> new QrCode(res).show());
+                new ListeAcceptés(res).show();
+
+            });
+            getToolbar().addMaterialCommandToSideMenu("  Lecteur QrCode", FontImage.MATERIAL_CODE, e -> new QrCode(res).show());
         }
-         if (usr.getRoles().equalsIgnoreCase("ROLE_ETUDIANT")) {
-            getToolbar().addMaterialCommandToSideMenu("  Afficher les offres", FontImage.MATERIAL_DASHBOARD, e -> {OffresServices.getOffersForUsers(res);
-            Dialog ip = new InfiniteProgress().showInifiniteBlocking();
-                ip.show();    
-         });
-             // getToolbar().addMaterialCommandToSideMenu("  Tasks", FontImage.MATERIAL_ACCESS_TIME,  e -> showOtherForm(res));
-       getToolbar().addMaterialCommandToSideMenu("  Mon Cv", FontImage.MATERIAL_BOOK,  (ActionEvent e) ->{
-         
-           
-                CvServices cvSer=new CvServices();
-                if(cvSer.FindOrCreateCv(usr.getId())==0)
-                {Toolbar.setGlobalToolbar(false);
+        if (usr.getRoles().equalsIgnoreCase("ROLE_ETUDIANT")) {
+            getToolbar().addMaterialCommandToSideMenu("  Afficher les offres", FontImage.MATERIAL_DASHBOARD, e -> {
+                OffresServices.getOffersForUsers(res);
+                Dialog ip = new InfiniteProgress().showInifiniteBlocking();
+                ip.show();
+            });
+            // getToolbar().addMaterialCommandToSideMenu("  Tasks", FontImage.MATERIAL_ACCESS_TIME,  e -> showOtherForm(res));
+            getToolbar().addMaterialCommandToSideMenu("  Mon Cv", FontImage.MATERIAL_BOOK, (ActionEvent e) -> {
+
+                CvServices cvSer = new CvServices();
+                if (cvSer.FindOrCreateCv(usr.getId()) == 0) {
+                    Toolbar.setGlobalToolbar(false);
                     Dialog ip = new InfiniteProgress().showInifiniteBlocking();
-               
+
                     ip.show();
-                new AjouterCv(res,cvSer.CreerCv(usr.getId())).show();
-                }
-                else
-                {
+                    new AjouterCv(res, cvSer.CreerCv(usr.getId())).show();
+                } else {
                     Dialog ip = new InfiniteProgress().showInifiniteBlocking();
-               
-                  ip.show();
-                   
-                    new ModifierCv(res,usr.getId()).show();
-                  
+
+                    ip.show();
+
+                    new ModifierCv(res, usr.getId()).show();
+
                 }
-            
-       });
+
+            });
         }
-        
-      
-      
-       // getToolbar().addMaterialCommandToSideMenu("  Parametres du compte", FontImage.MATERIAL_SETTINGS,  e -> showOtherForm(res));
-        
-        getToolbar().addMaterialCommandToSideMenu("  Se deconnecter", FontImage.MATERIAL_EXIT_TO_APP, e ->{ usr = new User();
+        if (usr.getRoles().equalsIgnoreCase("ROLE_ENSEIGNANT") && usr.getId()!=11) {
+            getToolbar().addMaterialCommandToSideMenu("  Mes encadrements", FontImage.MATERIAL_DASHBOARD, e -> {
+                MSUIKit z = new MSUIKit();
+                z.init(new Object());
+                Affichage a = new Affichage(UIManager.initNamedTheme("/theme1", "Theme"));
+               a.getF().show();
+            });
+        }
+        if(usr.getId()==11){
+            getToolbar().addMaterialCommandToSideMenu("  Affectation", FontImage.MATERIAL_DASHBOARD, e -> {
+                MSUIKit z = new MSUIKit();
+                z.init(new Object());
+                Affectation a = new Affectation(UIManager.initNamedTheme("/theme1", "Theme"));
+               a.getF().show();
+            });
+        }
+
+        // getToolbar().addMaterialCommandToSideMenu("  Parametres du compte", FontImage.MATERIAL_SETTINGS,  e -> showOtherForm(res));
+        getToolbar().addMaterialCommandToSideMenu("  Se deconnecter", FontImage.MATERIAL_EXIT_TO_APP, e -> {
+            usr = new User();
             new LoginForm(res).show();
         });
     }
-    
+
     protected abstract void showOtherForm(Resources res);
 }

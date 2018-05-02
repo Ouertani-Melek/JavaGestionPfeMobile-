@@ -36,7 +36,18 @@ public class User {
     private String codePostal;
     private int numTel;
     private boolean confirmer;
+    private String image1;
 
+    public String getImage1() {
+        return image1;
+    }
+
+    public void setImage1(String image1) {
+        this.image1 = image1;
+    }
+
+    
+    
     public boolean isConfirmer() {
         return confirmer;
     }

@@ -16,9 +16,22 @@ public class MSUIKit {
     private Form current;
     private Resources theme;
     public static Resources resource;
+
+    public Resources getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Resources theme) {
+        this.theme = theme;
+    }
+    //public static Resources theme1 ;
     public static String host;
+ 
+
+  
     public void init(Object context) {
         theme = UIManager.initFirstTheme("/theme");
+      
 
         // Enable Toolbar on all Forms by default
         Toolbar.setGlobalToolbar(true);
@@ -32,6 +45,7 @@ public class MSUIKit {
             current.show();
             return;
         }
+        
         host="localhost";
         new LoginForm(theme).show();
         //new ProfileForm(theme).show();

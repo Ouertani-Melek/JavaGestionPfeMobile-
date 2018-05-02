@@ -87,6 +87,7 @@ public class LoginForm extends Form {
                 try {
                     JSONParser jsonp = new JSONParser();
                     Map<String, Object> user = jsonp.parseJSON(new CharArrayReader(new String(cr.getResponseData()).toCharArray()));
+                    System.out.println(new String(cr.getResponseData()));
                     if (user.get("role").toString().equalsIgnoreCase("ROLE_ETUDIANT")) {
                         usr.setEmail(user.get("email").toString());
                         usr.setVille(user.get("ville").toString());
