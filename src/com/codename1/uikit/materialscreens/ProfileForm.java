@@ -21,6 +21,7 @@ package com.codename1.uikit.materialscreens;
 
 import com.codename1.components.FloatingActionButton;
 import com.codename1.components.MultiButton;
+import com.codename1.components.SpanLabel;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.FontImage;
@@ -71,7 +72,7 @@ public class ProfileForm extends SideMenuBaseForm {
                         FlowLayout.encloseIn(menuButton),
                         BorderLayout.centerAbsolute(
                                 BoxLayout.encloseY(
-                                    new Label(usr.getNom()+" "+usr.getPrenom(), "Title"),
+                                    new SpanLabel(usr.getNom()+" "+usr.getPrenom(), "Title"),
                                     new Label("UI/UX Designer", "SubTitle")
                                 )
                             ).add(BorderLayout.WEST, profilePicLabel),

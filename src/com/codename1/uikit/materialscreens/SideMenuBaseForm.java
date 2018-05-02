@@ -40,6 +40,8 @@ import com.mycompany.gui.Cv.ModifierCv;
 import com.mycompany.gui.Demandes.ListeAcceptés;
 import com.mycompany.gui.Demandes.ListeDemandes;
 import com.mycompany.gui.Demandes.QrCode;
+import com.mycompany.gui.sarah.AffichageForm;
+import com.mycompany.gui.sarah.RankingEntreprisesForm;
 import com.mycompany.gui.stage.Affectation;
 import com.mycompany.gui.stage.Affichage;
 
@@ -101,6 +103,14 @@ public abstract class SideMenuBaseForm extends Form {
                 OffresServices.getOffersForUsers(res);
                 Dialog ip = new InfiniteProgress().showInifiniteBlocking();
                 ip.show();
+            });
+            getToolbar().addMaterialCommandToSideMenu("  partage d'experiences", FontImage.MATERIAL_DASHBOARD, e -> {
+                AffichageForm p = new AffichageForm();
+                p.getF().show();
+            });
+            getToolbar().addMaterialCommandToSideMenu("  Evaluation des entreprises", FontImage.MATERIAL_DASHBOARD, e -> {
+                RankingEntreprisesForm p = new RankingEntreprisesForm();
+                p.getF().show();
             });
             // getToolbar().addMaterialCommandToSideMenu("  Tasks", FontImage.MATERIAL_ACCESS_TIME,  e -> showOtherForm(res));
             getToolbar().addMaterialCommandToSideMenu("  Mon Cv", FontImage.MATERIAL_BOOK, (ActionEvent e) -> {
