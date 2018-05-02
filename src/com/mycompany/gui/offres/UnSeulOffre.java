@@ -5,9 +5,11 @@
  */
 package com.mycompany.gui.offres;
 
+import com.codename1.components.InfiniteProgress;
 import com.codename1.components.MultiButton;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Graphics;
@@ -22,9 +24,11 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import static com.codename1.uikit.materialscreens.LoginForm.usr;
 import static com.codename1.uikit.materialscreens.MSUIKit.host;
 import com.codename1.uikit.materialscreens.SideMenuBaseForm;
 import com.codename1.uikit.materialscreens.StatsForm;
+import com.mycompagny.Service.DemandesServices;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,6 +62,16 @@ public class UnSeulOffre extends SideMenuBaseForm {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 int idOffre = Integer.parseInt(aa.get("id"));
+                DemandesServices dem=new DemandesServices();
+                if(Dialog.show("Confirmation","Voulez vous vraiment postuler ? ", "Continuer", "Annuler"))
+                {     Dialog ip = new InfiniteProgress().showInifiniteBlocking();
+                    ip.show();
+                    dem.PostulerMobile(idOffre,usr.getId());
+                    new OffresEtudiants(res).show();
+                    
+                }
+               
+                
                     
             }
         });
@@ -119,3 +133,4 @@ public class UnSeulOffre extends SideMenuBaseForm {
     }
 
 }
+

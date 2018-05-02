@@ -96,7 +96,7 @@ public abstract class SideMenuBaseForm extends Form {
                 new ListeAcceptés(res).show();
 
             });
-            getToolbar().addMaterialCommandToSideMenu("  Lecteur QrCode", FontImage.MATERIAL_CODE, e -> new QrCode(res).show());
+            getToolbar().addMaterialCommandToSideMenu("  Lecteur QrCode", FontImage.MATERIAL_CODE, e -> new QrCode());
         }
         if (usr.getRoles().equalsIgnoreCase("ROLE_ETUDIANT")) {
             getToolbar().addMaterialCommandToSideMenu("  Afficher les offres", FontImage.MATERIAL_DASHBOARD, e -> {

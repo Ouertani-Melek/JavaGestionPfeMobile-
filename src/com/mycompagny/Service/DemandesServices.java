@@ -221,4 +221,28 @@ public class DemandesServices {
         NetworkManager.getInstance().addToQueueAndWait(con);
         
     }
+    public void PostulerMobile(int id,int idUser)
+    {
+            ConnectionRequest con = new ConnectionRequest();
+        String Url = "http://"+host+"/gestionpfe/web/app_dev.php/PostulerMobile/"+ id+"/"+idUser;
+        con.setUrl(Url);
+
+       // System.out.println("tt");
+
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());
+            System.out.println(str);
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+    }
+//    public boolean verifOffreDemandeJointure(int idOffre,int idUser)
+//    {
+//     boolean verif = false;   
+//        
+//        
+//    
+//    return verif;
+//    }
+   
 }

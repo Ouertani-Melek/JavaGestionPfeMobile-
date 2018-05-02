@@ -35,7 +35,7 @@ public class RankingEntreprisesForm {
      private Resources theme;
 
     public RankingEntreprisesForm() {
-        theme = UIManager.initNamedTheme("/theme1", "Theme");
+        theme = UIManager.initNamedTheme("/theme2", "Theme2");
         
         
         f = new Form("Ranking Entreprises" ,  BoxLayout.y());

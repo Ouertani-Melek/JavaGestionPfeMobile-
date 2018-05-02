@@ -71,6 +71,7 @@ public class OffresServices {
                     }
                     
                     System.out.println("______________________________________________");
+                    
                     retur.add(o);
                 }
                 new OffresEtudiants(res).show();
@@ -90,5 +91,10 @@ public class OffresServices {
         
         }
        
+    }
+    public void ajouterOffreMobile(){
+    
+        
+    
     }
 }
